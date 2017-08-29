@@ -1,0 +1,31 @@
+<div class="wrapper-comp-settings is-active editor-with-buttons" id="settings-tab">
+  <ul class="list-input settings-list">
+    <li class="field comp-setting-entry is-set">
+      <div class="wrapper-comp-setting">
+	<label class="label setting-label" for="statmodule">CTAT StatTutor module</label>
+	<select name="statmodule" id="statmodule">{problems}</select>
+      </div>
+      <span class="tip setting-help">Select one of the available modules and it will be configured properly.</span>
+    </li>
+    <!-- changing dimensions removed as requested, the width and height can be changed by modifying the respective values in the XBlock -->
+    <li>Logging Parameters:
+    <ul>
+      <li class="field comp-setting-entry is-set">
+		  <div class="wrapper-comp-setting">
+			<label class="label setting-label" for="logging">Enable Logging</label>
+			<input class="input setting-input" style="width:20px;height:20px;" name="logging" id="logging" type="checkbox" {logging}></input>
+		  </div>		  
+      </li>
+    </ul>
+  </ul>
+  <div class="xblock-actions">
+    <ul>
+      <li class="action-item">
+        <a href="#" class="button action-primary save-button">Save</a>
+      </li>
+      <li class="action-item">
+        <a href="#" class="button cancel-button">Cancel</a>
+      </li>
+    </ul>
+  </div>
+</div>
