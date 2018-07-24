@@ -10,6 +10,7 @@ import math
 import pkg_resources
 import re
 import uuid
+from .mixins import EnforceDueDates
 
 # pylint: disable=import-error
 # The xblock packages are available in the runtime environment.
@@ -22,7 +23,7 @@ from xblock.fragment import Fragment
 log = logging.getLogger(__name__)
 
 
-class StattutorXBlock(XBlock):
+class StattutorXBlock(EnforceDueDates, XBlock):
     """
     A XBlock providing a CTAT backed StatTutor.
     """
@@ -224,11 +225,10 @@ class StattutorXBlock(XBlock):
 
     @XBlock.json_handler
     def ctat_log(self, data, dummy_suffix=''):
-
         # Send a problem_check event on each student submission for the OLI event handler.
-
         corrects = 0
-
+        if self.is_past_due():
+            return {'result': 'fail', 'error': 'Problem is past due'}
         if data.get('event') is not None:
             grade=data.get('event')
             problem_check_event_data = {'grade': grade.get('grade'), 'max_grade': 1.0, 'problem_question_name' : data.get('problem_question_name')}
@@ -270,7 +270,11 @@ class StattutorXBlock(XBlock):
         """
         self.attempted = True
         corrects = 0
-
+        if self.is_past_due():
+            return {
+                'result': 'fail',
+                'error': 'past due'
+            }
         if 'value' in data:
             try:
                 corrects = int(data.get('value'))
